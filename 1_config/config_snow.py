@@ -43,7 +43,9 @@ dic_score_title={'bias':'Bias','rmse':'RMSE', 'medae':'Med. Abs. Error','nse':'N
 
 #Dictionary containing the information relative to the snow databases
 dic_snow_data={
-    'CANSWE':{'type':'snow','path':'/fs/site7/eccc/crd/cps/data/CanSWE/CanSWE_2025/Updated_Data_ECCC/ECCC_CanSWE-CanEEN_1928-2025_v8.nc'},
+    'CANSWE':{'type':'snow','path':'/fs/site7/eccc/crd/cps/data/CanSWE/CanSWE_2025/Updated_Data_Pub/CanSWE-CanEEN_1928-2025_v8.nc'},
+    'US_NRCS':{'type':'snow','path':'/home/vvi001/store8/Eval_Data/Snow_Survey_Database/US_NRCS/US_NRCS_survey_1910_2026.nc'},
+    'SNT':{'type':'snow','path':'/home/vvi001/store8/Eval_Data/SNOTEL_data/data_all_US_1979_2026_v2/netcdf/snotel_US_1979_2026_QC.nc'}
 }
 
 # Add black list of stations

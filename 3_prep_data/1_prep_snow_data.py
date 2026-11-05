@@ -105,9 +105,8 @@ for isrc,src in enumerate(list_src):
         da_fin2=da_fin.where(~da_fin.station_id.isin(list_drop_both),drop=True)
 
             
-
     if(src=='CANSWE'):
-        list_var_drop = ['data_flag_snw','data_flag_snd','qc_flag_snw','qc_flag_snd','merge_snw','merge_snd','update_2020','merge_key','station_name_sec','station_name_ter','station_id_sec','station_id_ter','RMD','RMD2']
+        list_var_drop = ['data_flag_snw','data_flag_snd','qc_flag_snw','qc_flag_snd','station_name_sec','station_name_ter','station_id_sec','station_id_ter']
         # Set time to 18 UTC (reference time for CanSWE)
         da_fin2.coords['time']=da_fin2.coords['time']+np.timedelta64(18,'h')
         da_fin2['network'] = xr.full_like(da_fin2.station_name, 'CANSWE')
@@ -115,7 +114,41 @@ for isrc,src in enumerate(list_src):
         'long_name': 'snow_eval network identifier',
         'standard_name': 'network'}
 
-        
+    elif(src=='US_NRCS'):
+        list_var_drop = ['data_flag_snw','data_flag_snd','qc_flag_snw','qc_flag_snd']
+        # Set time to 18 UTC (reference time for CanSWE)
+        da_fin2.coords['time']=da_fin2.coords['time']+np.timedelta64(18,'h')
+
+        da_fin2['network'] = xr.full_like(da_fin2.station_name, 'US_NRCS')
+        da_fin2['network'].attrs = {
+        'long_name': 'snow_eval network identifier',
+        'standard_name': 'network'}
+
+        sta_id = da_fin2.station_id.values.tolist()
+        for sta in sta_id:
+            tt= da_fin2.type_mes.loc[dict(station_id=sta)].values          
+            # Identify aerial markers and set swe, sd and density value to nan
+            if(tt==7):
+                for var in ['den','snd','snw']:
+                    da_fin2[var].loc[dict(station_id=sta)]=np.nan
+            else:
+                mm= (da_fin2.data_flag_snw.loc[dict(station_id=sta)].values =='U')
+
+                # Set to NaN estimated values  
+                if(np.sum(mm)>0):   
+                    for var in ['den','snd','snw']: 
+                        da_fin2[var].loc[dict(station_id=sta)][mm]=np.nan
+
+    elif(src=='SNT'):
+        da_fin2 = da_fin2.rename({'Elevation_NTK':'elevation'}) #,'type':'type_mes'})
+        list_var_drop = ['qc_flag_snw','qc_flag_snd','RMD','RMD2']
+        da_fin2['snd'] = da_fin2['snd']*0.01 # Convert SD from cm to m
+
+        da_fin2['network'] = xr.full_like(da_fin2.station_name, 'SNT')
+        da_fin2['network'].attrs = {
+        'long_name': 'snow_eval network identifier',
+        'standard_name': 'network'}
+
     elif(src=='NHSWE'):
         da_fin2 = da_fin2.rename({'Elevation_NTK':'elevation'})
         list_var_drop = ['qco','gap','data_flag_snw','data_flag_snd']

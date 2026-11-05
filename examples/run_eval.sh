@@ -27,7 +27,7 @@ cd $dir_git
 # Step 3: collect observed data and extract colocated simulated data
 
 # Prepare snow observations
-python 3_prep_data/1_prep_snow_data.py -cf $file_cfg -src CANSWE -b $dat1 -e $dat2 # manual and auto st.
+python 3_prep_data/1_prep_snow_data.py -cf $file_cfg -src CANSWE US_NRCS SNT -b $dat1 -e $dat2 # manual and auto st.
 
 # Extract SVS2 simulations
 python 3_prep_data/2_extract_SVS2_snow.py -cf $file_cfg -d 10 -exp SVS2 -var SDA SMA SML -n 3

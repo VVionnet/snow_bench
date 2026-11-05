@@ -9,8 +9,9 @@ Snow data from the following sources can be used to evaluate model performances:
 | Network Name  | Details | Type of data |  Dates | 
 |:----------:|:-------------:|:-------------:|:-------------:| 
 | CANSWE | Canadian Historical SWE dataset  | SWE, SD and derived bulk snow density (manual+ automatic) (Vionnet et al., 2021)|  1928-2025|  
-| CANSD | Canadian Historical SD dataset  |  SD from ECCC manual and automatic stations (Brown et al., 2021) |  1840-2017|
-| NHSWE |Northern Hemisphere SWE dataset (Fontrodona-Bach et al., 2023)  | SD (automatic) | 1950-2022  |
+| SNT | US SNOTEL stations   | SWE, SD and derived bulk snow density (automatic) - QCed using CanSWE methods | 1979-2026 |
+| US_NRCS | US snow surveys (Western US + Alaska)   | SWE, SD and derived bulk snow density (manual) |1910-2026|
+
 
 **Note**: 
 * The simulatenous use of the datasets `CANSD` and `NHSWE` will generate duplicates. 
